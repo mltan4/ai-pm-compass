@@ -28,9 +28,9 @@ const Join = () => {
         setErr("This invite link is invalid or has expired.");
         return;
       }
-      // @ts-expect-error joined relation
-      setTeamName(invite.teams.name);
-      setTeamId(invite.team_id);
+      const joined = invite as unknown as { team_id: string; teams: { name: string } };
+      setTeamName(joined.teams.name);
+      setTeamId(joined.team_id);
     };
     lookup();
   }, [token]);
