@@ -7,14 +7,20 @@ interface Props {
   scores?: Record<string, number>;
   onCellClick?: (competencyId: string, level: number) => void;
   interactive?: boolean;
+  levelFilter?: number[];
+  aiOnly?: boolean;
 }
 
-export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props) => {
+export const RubricMatrix = ({ scores, onCellClick, interactive = false, levelFilter, aiOnly }: Props) => {
   const [open, setOpen] = useState<{ comp: Competency; level: number } | null>(null);
+  const visibleLevels = LEVELS.filter((l) => !levelFilter || levelFilter.length === 0 || levelFilter.includes(l.idx));
 
   return (
     <div className="space-y-10">
-      {CATEGORIES.map((cat) => (
+      {CATEGORIES.map((cat) => {
+        const comps = COMPETENCIES_BY_CATEGORY[cat.id].filter((c) => !aiOnly || c.isNew);
+        if (comps.length === 0) return null;
+        return (
         <section key={cat.id} className="animate-fade-in">
           <header className="mb-4 flex items-baseline justify-between gap-4 border-b border-border pb-3">
             <div>
