@@ -30,15 +30,10 @@ export const SiteHeader = () => {
           )}
         </nav>
         <div className="flex items-center gap-2">
-          {user ? (
+          {user && (
             <>
               <span className="hidden font-mono text-xs text-muted-foreground sm:inline">{user.email}</span>
               <Button variant="ghost" size="sm" onClick={signOut}>Sign out</Button>
-            </>
-          ) : (
-            <>
-              <Button variant="ghost" size="sm" asChild><Link to="/auth">Sign in</Link></Button>
-              <Button size="sm" asChild className="bg-gradient-primary hover:opacity-90"><Link to="/auth">Get started</Link></Button>
             </>
           )}
         </div>
