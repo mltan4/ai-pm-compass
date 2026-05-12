@@ -7,14 +7,20 @@ interface Props {
   scores?: Record<string, number>;
   onCellClick?: (competencyId: string, level: number) => void;
   interactive?: boolean;
+  levelFilter?: number[];
+  aiOnly?: boolean;
 }
 
-export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props) => {
+export const RubricMatrix = ({ scores, onCellClick, interactive = false, levelFilter, aiOnly }: Props) => {
   const [open, setOpen] = useState<{ comp: Competency; level: number } | null>(null);
+  const visibleLevels = LEVELS.filter((l) => !levelFilter || levelFilter.length === 0 || levelFilter.includes(l.idx));
 
   return (
     <div className="space-y-10">
-      {CATEGORIES.map((cat) => (
+      {CATEGORIES.map((cat) => {
+        const comps = COMPETENCIES_BY_CATEGORY[cat.id].filter((c) => !aiOnly || c.isNew);
+        if (comps.length === 0) return null;
+        return (
         <section key={cat.id} className="animate-fade-in">
           <header className="mb-4 flex items-baseline justify-between gap-4 border-b border-border pb-3">
             <div>
@@ -28,7 +34,7 @@ export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props
               <p className="mt-1 text-sm text-muted-foreground">{cat.tagline}</p>
             </div>
             <span className="font-mono text-xs text-muted-foreground">
-              {COMPETENCIES_BY_CATEGORY[cat.id].length} competencies
+              {comps.length} competencies
             </span>
           </header>
 
@@ -39,7 +45,7 @@ export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props
                   <th className="sticky left-0 z-10 w-[260px] bg-surface-elevated/80 p-3 text-left font-mono text-xs uppercase tracking-wider text-muted-foreground backdrop-blur">
                     Competency
                   </th>
-                  {LEVELS.map((l) => (
+                  {visibleLevels.map((l) => (
                     <th
                       key={l.idx}
                       className="p-3 text-center font-mono text-xs uppercase tracking-wider text-muted-foreground"
@@ -53,7 +59,7 @@ export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props
                 </tr>
               </thead>
               <tbody>
-                {COMPETENCIES_BY_CATEGORY[cat.id].map((comp) => {
+                {comps.map((comp) => {
                   const userLevel = scores?.[comp.id] ?? 0;
                   return (
                     <tr key={comp.id} className="border-b border-border/60 last:border-0">
@@ -68,7 +74,7 @@ export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props
                         </div>
                         <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{comp.summary}</p>
                       </td>
-                      {LEVELS.map((l) => {
+                      {visibleLevels.map((l) => {
                         const isUser = userLevel === l.idx;
                         const isUnder = userLevel > 0 && l.idx <= userLevel;
                         return (
@@ -111,7 +117,8 @@ export const RubricMatrix = ({ scores, onCellClick, interactive = false }: Props
             </table>
           </div>
         </section>
-      ))}
+        );
+      })}
 
       <Dialog open={!!open} onOpenChange={(o) => !o && setOpen(null)}>
         <DialogContent className="max-w-lg">
