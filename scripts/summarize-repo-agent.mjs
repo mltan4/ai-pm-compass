@@ -172,7 +172,9 @@ async function main() {
       throw new Error("Repo summary agent finished without producing a summary.");
     }
 
-    if (!streamedSummary.endsWith("\n")) {
+    if (!streamedSummary.trim()) {
+      process.stdout.write(`${finalSummary.trimEnd()}\n`);
+    } else if (!streamedSummary.endsWith("\n")) {
       process.stdout.write("\n");
     }
 
