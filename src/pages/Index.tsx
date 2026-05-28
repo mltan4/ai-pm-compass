@@ -31,12 +31,9 @@ const Index = () => {
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <Button size="lg" asChild className="bg-gradient-primary hover:opacity-90">
-                <Link to="/auth">
-                  Calibrate your team <ArrowRight className="ml-1 h-4 w-4" />
+                <Link to="/rubric">
+                  Explore the rubric <ArrowRight className="ml-1 h-4 w-4" />
                 </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link to="/rubric">Explore the rubric</Link>
               </Button>
             </div>
           </div>
@@ -131,13 +128,13 @@ const Index = () => {
       <section className="container pb-24 pt-10">
         <div className="overflow-hidden rounded-2xl border border-border bg-gradient-primary p-12 text-center shadow-elevated">
           <h2 className="font-display text-3xl font-semibold text-primary-foreground md:text-4xl">
-            Calibrate your PM team.
+            Explore the PM Levels rubric.
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">
             Build a shared language for what good looks like in the AI era.
           </p>
           <Button size="lg" variant="secondary" asChild className="mt-6">
-            <Link to="/auth">Get started — it's free <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            <Link to="/rubric">Browse all competencies <ArrowRight className="ml-1 h-4 w-4" /></Link>
           </Button>
         </div>
       </section>
