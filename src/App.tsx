@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import RubricPage from "./pages/RubricPage.tsx";
 import TeamPage from "./pages/TeamPage.tsx";
 import Join from "./pages/Join.tsx";
+import { DevDocsBubble } from "./components/DevDocsBubble.tsx";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/join/:token" element={<Join />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <DevDocsBubble />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
