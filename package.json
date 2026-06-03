@@ -9,6 +9,7 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "summarize:repo": "node scripts/summarize-repo-agent.mjs",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -65,6 +66,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@cursor/sdk": "^1.0.13",
     "@eslint/js": "^9.32.0",
     "@tailwindcss/typography": "^0.5.16",
     "@testing-library/jest-dom": "^6.6.0",
